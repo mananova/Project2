@@ -21,7 +21,7 @@ import ch.epfl.maze.util.Vector2D;
  * 
  */
 
-public final class Animation { //testing new branch
+public final class Animation {
 
 	/** Default number of waiting frames to display when animation is aborting. */
 	public static final int DEFAULT_WAITING_FRAMES = 2;
