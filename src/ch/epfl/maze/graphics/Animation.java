@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.imageio.ImageIO;
-
 import ch.epfl.maze.physical.Animal;
 import ch.epfl.maze.util.Action;
 import ch.epfl.maze.util.Direction;
