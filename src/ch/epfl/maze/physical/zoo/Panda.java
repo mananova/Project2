@@ -51,28 +51,13 @@ public class Panda extends Animal {
 				nulMark.add(i);
 			}
 		}
-		/*	
-		int c = -1;
-		if (!markedOnce.contains(getPosition()) && !markedTwice.contains(getPosition())){
-			c = 0;
-		}else if(markedTwice.contains(getPosition())) {
-			c = 2;
-		}else if(markedOnce.contains(getPosition())){
-			c = 1;
-		}
-		System.out.println("on " + c + "; surrounded by " + nulMark.size() + " nulMarked, " + oneMark.size() + " oneMarked, " + twoMark.size() + " twoMarked");
-		*/
 		
 		//CHOOSING THE PATH
 		if (nulMark.size() > 0){//if non-marked choices are available
 			prevChoice = choices[nulMark.get(rand.nextInt(nulMark.size()))];//choose randomly from unmarked choices
 		}else if (oneMark.size() > 0){//if no unmarked, but some one-marked choices are available
-			if (oneMark.size() == choices.length){//if all choices are one-marked
+			if (oneMark.size() == 3 && choices.length == 3){//if all choices are one-marked at the intersection
 				prevChoice = prevChoice.reverse();//turn back
-				//
-				//markedTwice.add(getPosition());
-				//return prevChoice;
-				//
 			}else{
 				if (oneMark.size() == 1){//if only 1 one-marked choice
 					prevChoice = choices[oneMark.get(0)];//choose it
