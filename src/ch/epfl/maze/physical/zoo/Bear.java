@@ -40,7 +40,6 @@ public class Bear extends Animal {
 
 	@Override
 	public Animal copy() {
-		// TODO
-		return null;
+		return new Bear(this.getPosition());
 	}
 }

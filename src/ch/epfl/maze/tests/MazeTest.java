@@ -85,7 +85,7 @@ public class MazeTest extends TestCase {
 
 		// checks that animal in maze is not null
 		Animal retrieved = maze.getAnimals().get(0);
-
+		
 		assertTrue("Animal in Maze should be a Mouse", retrieved != null);
 	}
 }

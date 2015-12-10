@@ -46,7 +46,6 @@ public class SpaceInvader extends Animal {
 
 	@Override
 	public Animal copy() {
-		// TODO (bonus)
-		return null;
+		return new SpaceInvader(this.getPosition());
 	}
 }

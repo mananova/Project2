@@ -11,7 +11,6 @@ import ch.epfl.maze.physical.pacman.Clyde;
 import ch.epfl.maze.physical.pacman.Inky;
 import ch.epfl.maze.physical.pacman.PacMan;
 import ch.epfl.maze.physical.pacman.Pinky;
-import ch.epfl.maze.physical.zoo.Bear;
 import ch.epfl.maze.physical.zoo.Hamster;
 import ch.epfl.maze.physical.zoo.Monkey;
 import ch.epfl.maze.physical.zoo.Mouse;
@@ -37,8 +36,8 @@ public class Console {
 	public static void main(String[] args) {
 		Simulation simulation;
 
-		simulation = getMazeSimulation();
-		//simulation = getDaedalusSimulation();
+		//simulation = getMazeSimulation();
+		simulation = getDaedalusSimulation();
 
 		System.out.print("Launching " + NUMBER_OF_SIMULATIONS + " simulations...");
 		Map<String, List<Integer>> results =

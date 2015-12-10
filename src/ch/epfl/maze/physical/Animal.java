@@ -1,25 +1,23 @@
 package ch.epfl.maze.physical;
-
 import ch.epfl.maze.util.Direction;
 import ch.epfl.maze.util.Vector2D;
-
 /**
  * Animal inside a {@code World} that can move depending on the available
  * choices it has at its position.
  * 
  */
-
 abstract public class Animal {
 
+	private Vector2D position;
+	
 	/**
 	 * Constructs an animal with a specified position.
 	 * 
 	 * @param position
 	 *            Position of the animal in the labyrinth
 	 */
-
 	public Animal(Vector2D position) {
-		// TODO
+		this.position = position;
 	}
 
 	/**
@@ -32,7 +30,6 @@ abstract public class Animal {
 	 *            World.getChoices(Vector2D)})
 	 * @return The next direction of the animal, chosen in {@code choices}
 	 */
-
 	abstract public Direction move(Direction[] choices);
 
 	/**
@@ -44,9 +41,8 @@ abstract public class Animal {
 	 * @param dir
 	 *            Direction that the animal has taken
 	 */
-
 	public final void update(Direction dir) {
-		// TODO
+		setPosition(this.position.add(dir.toVector()));
 	}
 
 	/**
@@ -57,9 +53,8 @@ abstract public class Animal {
 	 * 
 	 * @param position
 	 */
-
 	public final void setPosition(Vector2D position) {
-		// TODO
+		this.position = position;
 	}
 
 	/**
@@ -67,11 +62,10 @@ abstract public class Animal {
 	 * 
 	 * @return Current position of animal.
 	 */
-
 	public final Vector2D getPosition() {
-		// TODO
-		return null;
+		return this.position;
 	}
 
 	abstract public Animal copy();
+	
 }

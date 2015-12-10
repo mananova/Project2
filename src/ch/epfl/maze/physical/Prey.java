@@ -1,25 +1,25 @@
 package ch.epfl.maze.physical;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import ch.epfl.maze.util.Direction;
 import ch.epfl.maze.util.Vector2D;
-
 /**
  * Prey that is killed by a predator when they meet each other in the labyrinth.
  * 
  */
-
 abstract public class Prey extends Animal {
 
+	private Direction prevChoice;
+	
 	/**
 	 * Constructs a prey with a specified position.
 	 * 
 	 * @param position
 	 *            Position of the prey in the labyrinth
 	 */
-
 	public Prey(Vector2D position) {
 		super(position);
-		// TODO
 	}
 
 	/**
@@ -27,11 +27,25 @@ abstract public class Prey extends Animal {
 	 * {@code MazeSimulation}.
 	 * 
 	 */
-
 	@Override
 	public final Direction move(Direction[] choices) {
-		// TODO
-		return Direction.NONE;
+		Random rand = new Random();
+		if(choices.length == 1){
+			prevChoice = choices[0];
+		}else{
+			if (prevChoice == null){
+				prevChoice = choices[rand.nextInt(choices.length)];
+			}else{
+				List<Direction> newChoices = new ArrayList<Direction>();
+				for (int i = 0; i < choices.length; i++){
+					if (!choices[i].equals(prevChoice.reverse())){
+						newChoices.add(choices[i]);
+					}
+				}
+				prevChoice = newChoices.get(rand.nextInt(newChoices.size()));
+			}
+		}
+		return prevChoice;
 	}
 
 	/**
@@ -50,6 +64,9 @@ abstract public class Prey extends Animal {
 	 *            The world in which the animal moves
 	 * @return The next direction of the animal, chosen in {@code choices}
 	 */
-
 	abstract public Direction move(Direction[] choices, Daedalus daedalus);
+	
+	public final Direction getDirection(){
+		return prevChoice;
+	}
 }

@@ -1,18 +1,18 @@
 package ch.epfl.maze.physical;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.epfl.maze.util.Direction;
 import ch.epfl.maze.util.Vector2D;
-
 /**
  * World that is represented by a labyrinth of tiles in which an {@code Animal}
  * can move.
  * 
  */
-
 public abstract class World {
-
+	
+	private final int[][] labyrinth;
+	
 	/* tiles constants */
 	public static final int FREE = 0;
 	public static final int WALL = 1;
@@ -26,9 +26,14 @@ public abstract class World {
 	 * @param labyrinth
 	 *            Structure of the labyrinth, an NxM array of tiles
 	 */
-
 	public World(int[][] labyrinth) {
-		// TODO
+		int[][] tmplab = new int[labyrinth.length][labyrinth[0].length];
+		for(int i = 0; i < labyrinth.length; i++){
+			for(int j = 0; j < labyrinth[0].length; j++){
+				tmplab[i][j] = labyrinth[i][j];
+			}
+		}
+		this.labyrinth = tmplab;
 	}
 
 	/**
@@ -36,13 +41,11 @@ public abstract class World {
 	 * 
 	 * @return <b>true</b> if no more moves can be made, <b>false</b> otherwise
 	 */
-
 	abstract public boolean isSolved();
 
 	/**
 	 * Resets the world as when it was instantiated.
 	 */
-
 	abstract public void reset();
 
 	/**
@@ -50,7 +53,6 @@ public abstract class World {
 	 * 
 	 * @return A list of all animals in the world
 	 */
-
 	abstract public List<Animal> getAnimals();
 
 	/**
@@ -63,10 +65,11 @@ public abstract class World {
 	 * @return The tile number at position (x, y), or the NONE tile if x or y is
 	 *         incorrect.
 	 */
-
 	public final int getTile(int x, int y) {
-		// TODO
-		return 0;
+		if (x < 0 || y < 0 || x > this.labyrinth[0].length-1 || y > this.labyrinth.length-1){
+			return World.NOTHING;
+		}
+		return labyrinth[y][x];
 	}
 
 	/**
@@ -78,10 +81,8 @@ public abstract class World {
 	 *            Vertical coordinate
 	 * @return <b>true</b> if an animal can walk on tile, <b>false</b> otherwise
 	 */
-
 	public final boolean isFree(int x, int y) {
-		// TODO
-		return false;
+		return (getTile(x,y) == World.FREE || getTile(x,y) == World.START || getTile(x,y) == World.EXIT);
 	}
 
 	/**
@@ -93,21 +94,41 @@ public abstract class World {
 	 *            A position in the maze
 	 * @return An array of all available choices at a position
 	 */
-
 	public final Direction[] getChoices(Vector2D position) {
-		// TODO
-		return null;
+		ArrayList<Direction> tmplist = new ArrayList<Direction>();
+		int size = 0;
+		if (isFree(position.getX(),position.getY()+1)){
+			tmplist.add(Direction.DOWN);
+			size++;
+		}
+		if (isFree(position.getX()-1,position.getY())){
+			tmplist.add(Direction.LEFT);
+			size++;
+		}
+		if (isFree(position.getX()+1,position.getY())){
+			tmplist.add(Direction.RIGHT);
+			size++;
+		}
+		if (isFree(position.getX(),position.getY()-1)){
+			tmplist.add(Direction.UP);
+			size++;
+		}
+		if (size == 0){
+			Direction[] directions = {Direction.NONE};
+			return directions;
+		}
+		Direction[] directions = new Direction[size];
+		tmplist.toArray(directions);
+		return directions;
 	}
-
+	
 	/**
 	 * Returns horizontal length of labyrinth.
 	 * 
 	 * @return The horizontal length of the labyrinth
 	 */
-
 	public final int getWidth() {
-		// TODO
-		return 0;
+		return this.labyrinth[0].length;
 	}
 
 	/**
@@ -115,10 +136,8 @@ public abstract class World {
 	 * 
 	 * @return The vertical length of the labyrinth
 	 */
-
 	public final int getHeight() {
-		// TODO
-		return 0;
+		return this.labyrinth.length;
 	}
 
 	/**
@@ -127,9 +146,14 @@ public abstract class World {
 	 * 
 	 * @return Start position of the labyrinth, null if none.
 	 */
-
 	public final Vector2D getStart() {
-		// TODO
+		for(int i = 0; i < this.labyrinth.length; i++){
+			for(int j = 0; j < this.labyrinth[0].length; j++){
+				if (this.labyrinth[i][j] == World.START){
+					return new Vector2D(j, i);
+				}
+			}
+		}
 		return null;
 	}
 
@@ -138,9 +162,14 @@ public abstract class World {
 	 * 
 	 * @return Exit position of the labyrinth, null if none.
 	 */
-
 	public final Vector2D getExit() {
-		// TODO
+		for(int i = 0; i < this.labyrinth.length; i++){
+			for(int j = 0; j < this.labyrinth[0].length; j++){
+				if (this.labyrinth[i][j] == World.EXIT){
+					return new Vector2D(j, i);
+				}
+			}
+		}
 		return null;
 	}
 }
